@@ -1,0 +1,12 @@
+FROM gradle:8.4.0-jdk17 AS build
+
+WORKDIR /home/cabeceira
+
+
+COPY build.gradle .
+COPY settings.gradle .
+COPY src /home/cabeceira/src
+
+RUN gradle build -x test
+
+CMD ["gradle", "test"]

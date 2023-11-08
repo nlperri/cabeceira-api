@@ -1,7 +1,5 @@
 package cabeceira.api.domain.user;
 
-import java.util.UUID;
-
 import cabeceira.api.domain.userBooks.UserBooks;
 
 import java.util.List;
@@ -33,7 +31,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column(nullable = false)
     private String name;

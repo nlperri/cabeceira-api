@@ -3,6 +3,7 @@ package cabeceira.api.domain.book;
 import java.util.Set;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import cabeceira.api.domain.author.Author;
 import cabeceira.api.domain.userBooks.UserBooks;
 import jakarta.persistence.Column;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Book {
+public class Book { 
 
     @Id
     private String id;
@@ -37,8 +38,10 @@ public class Book {
     @Column(name = "total_pages")
     private int totalPages;
 
+    @Column(columnDefinition="TEXT")
     private String cover;
 
+    @Column(columnDefinition="TEXT")
     private String description;
 
     @Column(name = "published_date")
@@ -50,7 +53,17 @@ public class Book {
     @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
     private List<UserBooks> usersBooks;
 
+public Book(String id, String title, int totalPages, String cover, String description, String publishedDate, String publisher, Set<Author> authors) {
+        this.id = id;
+        this.title = title;
+        this.totalPages = totalPages;
+        this.cover = cover;
+        this.description = description;
+        this.publishedDate = publishedDate;
+        this.publisher = publisher;
+        this.authors = authors;
+    }
 }

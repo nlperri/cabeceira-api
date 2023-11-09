@@ -3,6 +3,7 @@ package cabeceira.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +36,12 @@ public class UserController {
     @Transactional
     public ResponseEntity<UserDetailsDTO> update(@RequestBody UpdateUserDTO data, @PathVariable String id) {
         var user = this.userService.update(data, id);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDetailsDTO> getById(@PathVariable String id) {
+        var user = this.userService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }

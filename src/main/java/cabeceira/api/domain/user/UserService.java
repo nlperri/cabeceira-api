@@ -35,4 +35,12 @@ public class UserService {
         user.update(data);
         return new UserDetailsDTO(user);
     }
+
+    public UserDetailsDTO getById(String id) {
+        var user = userRepository.getReferenceById(id);
+        if (user == null) {
+            throw new ValidatorException("User does not exist");
+        }
+        return new UserDetailsDTO(user);
+    }
 }

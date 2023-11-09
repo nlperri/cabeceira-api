@@ -1,6 +1,5 @@
 package cabeceira.api.domain.userBooks;
 
-import java.util.UUID;
 import cabeceira.api.domain.book.Book;
 import cabeceira.api.domain.user.User;
 import jakarta.persistence.Column;

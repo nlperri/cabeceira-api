@@ -1,6 +1,5 @@
 package cabeceira.api.domain.user;
 
-import org.hibernate.validator.constraints.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class UserService {
     public UserDetailsDTO update(UpdateUserDTO data, String id) {
         var user = userRepository.getReferenceById(id);
         if (user == null) {
-            throw new ValidatorException("User does not exist");
+            throw new ValidatorException("Id de usuário inválido.");
         }
 
         user.update(data);
@@ -39,7 +38,7 @@ public class UserService {
     public UserDetailsDTO getById(String id) {
         var user = userRepository.getReferenceById(id);
         if (user == null) {
-            throw new ValidatorException("User does not exist");
+            throw new ValidatorException("Id de usuário inválido.");
         }
         return new UserDetailsDTO(user);
     }

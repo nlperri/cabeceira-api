@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import jakarta.persistence.CascadeType;
 import cabeceira.api.domain.user.dto.CreateUserDTO;
 import cabeceira.api.domain.user.dto.UpdateUserDTO;
 import cabeceira.api.domain.userBooks.UserBooks;
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<UserBooks> userBook;
 
     public User(CreateUserDTO data) {

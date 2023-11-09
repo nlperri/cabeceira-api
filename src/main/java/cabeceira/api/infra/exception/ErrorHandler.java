@@ -49,7 +49,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleError500(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + ex.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + ex.getMessage());
     }
 
     @ExceptionHandler(ValidatorException.class)

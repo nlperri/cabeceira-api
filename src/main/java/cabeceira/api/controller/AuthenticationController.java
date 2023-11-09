@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cabeceira.api.domain.user.AuthenticationDTO;
-import cabeceira.api.domain.user.LoginResponseDTO;
 import cabeceira.api.domain.user.User;
+import cabeceira.api.domain.user.dto.AuthenticationDTO;
+import cabeceira.api.domain.user.dto.LoginResponseDTO;
 import cabeceira.api.infra.security.TokenService;
 
 @RestController

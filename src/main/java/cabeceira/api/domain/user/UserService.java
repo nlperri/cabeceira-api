@@ -1,11 +1,14 @@
 package cabeceira.api.domain.user;
 
+import org.hibernate.validator.constraints.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cabeceira.api.domain.user.dto.CreateUserDTO;
+import cabeceira.api.domain.user.dto.UpdateUserDTO;
 import cabeceira.api.domain.user.dto.UserDetailsDTO;
+import cabeceira.api.infra.exception.ValidatorException;
 
 @Service
 public class UserService {
@@ -23,7 +26,13 @@ public class UserService {
         return userDetails;
     }
 
-    public void update() {
+    public UserDetailsDTO update(UpdateUserDTO data, String id) {
+        var user = userRepository.getReferenceById(id);
+        if (user == null) {
+            throw new ValidatorException("User does not exist");
+        }
 
+        user.update(data);
+        return new UserDetailsDTO(user);
     }
 }

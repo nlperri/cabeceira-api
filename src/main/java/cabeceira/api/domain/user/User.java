@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import cabeceira.api.domain.user.dto.CreateUserDTO;
+import cabeceira.api.domain.user.dto.UpdateUserDTO;
 import cabeceira.api.domain.userBooks.UserBooks;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,11 +49,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<UserBooks> userBook;
 
-    public User(CreateUserDTO createUserDto) {
-        this.email = createUserDto.email();
-        this.password = createUserDto.password();
-        this.name = createUserDto.name();
-        this.lastName = createUserDto.lastName();
+    public User(CreateUserDTO data) {
+        this.email = data.email();
+        this.password = data.password();
+        this.name = data.name();
+        this.lastName = data.lastName();
     }
 
     @Override
@@ -83,6 +84,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+
+    }
+
+    public void update(UpdateUserDTO data) {
+        this.password = data.password() != null ? data.password() : this.password;
+        this.name = data.name() != null ? data.name() : this.name;
+        this.lastName = data.lastName() != null ? data.lastName() : this.lastName;
 
     }
 

@@ -2,22 +2,16 @@ package cabeceira.api.domain.user;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
 import cabeceira.api.domain.user.dto.CreateUserDTO;
 import cabeceira.api.domain.user.dto.UpdateUserDTO;
-import cabeceira.api.domain.userBooks.UserBooks;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -49,9 +43,8 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-
-    private List<UserBooks> userBook;
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    // private List<UserBooks> userBook;
 
     public User(CreateUserDTO data) {
         this.email = data.email();

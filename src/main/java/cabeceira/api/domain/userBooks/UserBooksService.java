@@ -9,6 +9,7 @@ import cabeceira.api.domain.book.Book;
 import cabeceira.api.domain.book.BookRepository;
 import cabeceira.api.domain.userBooks.dto.UpdateUserBooksDTO;
 import cabeceira.api.domain.userBooks.dto.UserBooksDetailsDTO;
+import cabeceira.api.domain.userBooks.dto.UserBooksWithBookDetailsDTO;
 import cabeceira.api.infra.exception.ValidatorException;
 
 @Service
@@ -56,7 +57,8 @@ public class UserBooksService {
         var bookDetails = this.userBooksRepository.findByBookId(
                 bookId);
 
-        return bookDetails;
+        var data = new UserBooksWithBookDetailsDTO(bookDetails.get());
+        return data;
     }
 
     // public List<UserBooksWithBookDetailsDTO> fetchUserBooks(String userId) {

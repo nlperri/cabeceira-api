@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -25,6 +27,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("Cabeceira api")
                     .withSubject(user.getEmail())
+                    .withClaim("userId", user.getId())
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
             return token;
@@ -52,4 +55,13 @@ public class TokenService {
     private Instant generateExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
+
+    public String getLoggedUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User userDetails = (User) authentication.getPrincipal();
+        String userId = userDetails.getId();
+
+        return userId;
+    }
+
 };

@@ -25,13 +25,15 @@ public class UserService {
         return userDetails;
     }
 
-    public UserDetailsDTO update(UpdateUserDTO data, String id) {
-        var user = userRepository.getReferenceById(id);
+    public UserDetailsDTO update(UpdateUserDTO data, String userId) {
+        var user = userRepository.getReferenceById(userId);
         if (user == null) {
             throw new ValidatorException("Id de usuário inválido.");
         }
 
         user.update(data);
+        userRepository.save(user);
+
         return new UserDetailsDTO(user);
     }
 

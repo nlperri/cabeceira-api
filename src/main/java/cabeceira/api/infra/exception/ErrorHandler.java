@@ -3,12 +3,15 @@ package cabeceira.api.infra.exception;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.RestClientException;
+
 import javax.naming.AuthenticationException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
@@ -55,6 +58,11 @@ public class ErrorHandler {
     @ExceptionHandler(ValidatorException.class)
     public ResponseEntity<String> handleValidation(ValidatorException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(RestClientException.class)
+    public ResponseEntity<String> handleRestClientError(RestClientException ex) {
+        return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessage());
     }
 
     public record ErrorValidationDTO(String field, String message) {

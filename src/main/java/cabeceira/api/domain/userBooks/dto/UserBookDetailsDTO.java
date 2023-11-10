@@ -6,7 +6,6 @@ import cabeceira.api.domain.userBooks.BookshelfStatus;
 import cabeceira.api.domain.userBooks.UserBooks;
 
 public record UserBookDetailsDTO(
-        String id,
         UserDetailsDTO user,
         BookDetailsDTO book,
         BookshelfStatus bookshelfStatus,
@@ -14,7 +13,6 @@ public record UserBookDetailsDTO(
 
     public UserBookDetailsDTO(UserBooks userBooks) {
         this(
-                userBooks.getId(),
                 new UserDetailsDTO(userBooks.getUser()),
                 new BookDetailsDTO(userBooks.getBook()),
                 userBooks.getBookshelfStatus(),

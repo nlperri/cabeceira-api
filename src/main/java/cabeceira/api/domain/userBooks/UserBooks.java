@@ -46,4 +46,11 @@ public class UserBooks {
     @Column(name = "readed_pages")
     private Integer readedPages;
 
+
+    public UserBooks(User user, Book book, BookshelfStatus bookshelfStatus, Integer readedPages ) {
+        this.user = user;
+        this.book = book;
+        this.bookshelfStatus = bookshelfStatus;
+        this.readedPages = readedPages;
+    }
 }

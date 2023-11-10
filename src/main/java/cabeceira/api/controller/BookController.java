@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cabeceira.api.domain.userBooks.dto.UserBookDetailsDTO;
 import cabeceira.api.infra.security.TokenService;
 
-record DataBody(String userId) {
-
-}
-
 @RestController
 @RequestMapping("/books")
 public class BookController {

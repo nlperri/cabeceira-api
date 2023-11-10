@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import cabeceira.api.domain.user.User;
 import cabeceira.api.domain.user.UserRepository;
+import cabeceira.api.domain.book.Book;
 import cabeceira.api.domain.book.BookRepository;
 import cabeceira.api.domain.userBooks.dto.UpdateUserBooksDTO;
 import cabeceira.api.domain.userBooks.dto.UserBooksDetailsDTO;
@@ -48,6 +49,20 @@ public class UserBooksService {
 
     }
 
+    public Object getDetails(String userId, String bookId) {
+        userExists(userId);
+        bookExists(bookId);
+
+        var bookDetails = this.userBooksRepository.findByBookId(
+                bookId);
+
+        return bookDetails;
+    }
+
+    // public List<UserBooksWithBookDetailsDTO> fetchUserBooks(String userId) {
+
+    // }
+
     public void delete(String userBookId, String userId) {
 
         userExists(userId);
@@ -74,4 +89,14 @@ public class UserBooksService {
         }
         return user;
     }
+
+    private Book bookExists(String bookId) {
+        var book = bookRepository.getReferenceById(bookId);
+
+        if (book == null) {
+            throw new ValidatorException("Id de livro inválido.");
+        }
+        return book;
+    }
+
 }

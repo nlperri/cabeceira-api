@@ -2,6 +2,8 @@ package cabeceira.api.domain.userBooks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import cabeceira.api.domain.user.User;
 import cabeceira.api.domain.user.UserRepository;
 import cabeceira.api.domain.book.BookRepository;
 import cabeceira.api.domain.userBooks.dto.UpdateUserBooksDTO;
@@ -21,69 +23,55 @@ public class UserBooksService {
     BookRepository bookRepository;
 
     public UserBooksDetailsDTO update(UpdateUserBooksDTO data, String userBookId, String userId) {
-        var user = userRepository.getReferenceById(userId);
 
-        if (user == null) {
-            throw new ValidatorException("Id de usuário inválido.");
-        }
+        userExists(userId);
 
-        var userBook = userBooksRepository.getReferenceById(userBookId);
-        
-
-        if (userBook == null) {
-            throw new ValidatorException("Id de estante inválido.");
-        }
+        var userBook = userBooksExists(userBookId);
 
         var book = bookRepository.getReferenceById(userBook.getBook().getId());
 
-        if(data.readedPages() != null) {
-            if(data.readedPages() > book.getTotalPages()) {
+        if (data.readedPages() != null) {
+            if (data.readedPages() > book.getTotalPages()) {
                 throw new ValidatorException("Número de páginas lidas inválido.");
             }
         }
 
-        if(data.bookshelfStatus() == BookshelfStatus.READED) {
+        if (data.bookshelfStatus() == BookshelfStatus.READED) {
             var bookTotalpages = book.getTotalPages();
             data = new UpdateUserBooksDTO(BookshelfStatus.READED, bookTotalpages);
         }
 
         userBook.update(data);
-        UserBooks ubToSave = userBooksRepository.save(userBook);
-        return new UserBooksDetailsDTO(ubToSave);
+        UserBooks userBookToSave = userBooksRepository.save(userBook);
+
+        return new UserBooksDetailsDTO(userBookToSave);
 
     }
 
     public void delete(String userBookId, String userId) {
-        var user = userRepository.getReferenceById(userId);
 
-        if (user == null) {
-            throw new ValidatorException("Id de usuário inválido.");
-        }
+        userExists(userId);
 
+        var userBook = userBooksExists(userBookId);
+
+        userBooksRepository.delete(userBook);
+    }
+
+    private UserBooks userBooksExists(String userBookId) {
         var userBook = userBooksRepository.getReferenceById(userBookId);
 
         if (userBook == null) {
             throw new ValidatorException("Id de estante inválido.");
         }
-
-        userBooksRepository.delete(userBook);
+        return userBook;
     }
 
-    private boolean bookshelfExists(String userBookId) {
-        var userBook = userBooksRepository.getReferenceById(userBookId);
-
-        if (userBook == null) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean userExists(String userId) {
-        var user = userBooksRepository.getReferenceById(userId);
+    private User userExists(String userId) {
+        var user = userRepository.getReferenceById(userId);
 
         if (user == null) {
-            return false;
+            throw new ValidatorException("Id de usuário inválido.");
         }
-        return true;
+        return user;
     }
 }

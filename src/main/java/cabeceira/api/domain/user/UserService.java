@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public UserDetailsDTO update(UpdateUserDTO data, String id) {
-        var user = userRepository.getReferenceById(id);
+        User user = userRepository.getReferenceById(id);
         if (user == null) {
             throw new ValidatorException("Id de usuário inválido.");
         }

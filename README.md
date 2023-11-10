@@ -61,6 +61,7 @@ Certifique-se de ter o Docker instalado para a execução do banco de dados MySQ
 
 
 4. A aplicação estará disponível em `http://localhost:8080`.
+5. Para acessar a documentação do Swagger UI, após iniciar a aplicação, vá para `http://localhost:8080/swagger-ui/index.html#`.
 
 ## Testes
 

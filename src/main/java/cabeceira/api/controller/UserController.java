@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import cabeceira.api.domain.user.UserService;
 import cabeceira.api.domain.user.dto.CreateUserDTO;
@@ -37,6 +38,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
+    @SecurityRequirement(name = "bearer-key")
     @PutMapping()
     @Transactional
     public ResponseEntity<UserDetailsDTO> update(@RequestBody UpdateUserDTO data) {
@@ -47,6 +49,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    @SecurityRequirement(name = "bearer-key")
     @GetMapping()
     public ResponseEntity<UserDetailsDTO> getById() {
 

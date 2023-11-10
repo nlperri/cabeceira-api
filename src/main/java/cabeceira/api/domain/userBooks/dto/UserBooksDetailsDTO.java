@@ -5,13 +5,13 @@ import cabeceira.api.domain.user.dto.UserDetailsDTO;
 import cabeceira.api.domain.userBooks.BookshelfStatus;
 import cabeceira.api.domain.userBooks.UserBooks;
 
-public record UserBookDetailsDTO(
+public record UserBooksDetailsDTO(
         UserDetailsDTO user,
         BookDetailsDTO book,
         BookshelfStatus bookshelfStatus,
         Integer readedPages) {
 
-    public UserBookDetailsDTO(UserBooks userBooks) {
+    public UserBooksDetailsDTO(UserBooks userBooks) {
         this(
                 new UserDetailsDTO(userBooks.getUser()),
                 new BookDetailsDTO(userBooks.getBook()),

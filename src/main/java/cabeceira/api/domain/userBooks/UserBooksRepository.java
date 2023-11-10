@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserBooksRepository extends JpaRepository<UserBooks, String> {
-
+    
 }

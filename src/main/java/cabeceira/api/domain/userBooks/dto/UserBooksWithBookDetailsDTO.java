@@ -5,7 +5,7 @@ import java.util.Set;
 import cabeceira.api.domain.author.dto.AuthorDTO;
 import cabeceira.api.domain.userBooks.BookshelfStatus;
 
-public record UserBookWithBookDetailsDTO(
+public record UserBooksWithBookDetailsDTO(
         String userId,
         String bookId,
         BookshelfStatus bookshelfStatus,

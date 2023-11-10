@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import cabeceira.api.domain.userBooks.dto.UserBookDetailsDTO;
+import cabeceira.api.domain.userBooks.dto.UserBooksDetailsDTO;
 import cabeceira.api.infra.security.TokenService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -24,7 +26,7 @@ public class BookController {
 
     @PostMapping("/{bookId}")
     @Transactional
-    public ResponseEntity<UserBookDetailsDTO> add(@PathVariable String bookId) {
+    public ResponseEntity<UserBooksDetailsDTO> add(@PathVariable String bookId) {
 
         var userId = tokenService.getLoggedUserId();
 

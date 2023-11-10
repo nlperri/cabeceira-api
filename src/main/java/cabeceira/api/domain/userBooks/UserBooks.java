@@ -2,6 +2,7 @@ package cabeceira.api.domain.userBooks;
 
 import cabeceira.api.domain.book.Book;
 import cabeceira.api.domain.user.User;
+import cabeceira.api.domain.userBooks.dto.UpdateUserBooksDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,4 +54,9 @@ public class UserBooks {
         this.readedPages = readedPages;
     }
 
+    public void update(UpdateUserBooksDTO data) {
+        this.bookshelfStatus = data.bookshelfStatus() != null ? data.bookshelfStatus() : this.bookshelfStatus;
+        this.readedPages = data.readedPages() != null ? data.readedPages() : this.readedPages;
+    }
+    
 }

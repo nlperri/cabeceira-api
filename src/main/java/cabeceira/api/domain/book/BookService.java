@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import cabeceira.api.domain.userBooks.BookshelfStatus;
 import cabeceira.api.domain.userBooks.UserBooks;
 import cabeceira.api.domain.userBooks.UserBooksRepository;
-import cabeceira.api.domain.userBooks.dto.UserBookDetailsDTO;
+import cabeceira.api.domain.userBooks.dto.UserBooksDetailsDTO;
 import cabeceira.api.domain.author.Author;
 import cabeceira.api.domain.author.AuthorRepository;
 
@@ -35,7 +35,7 @@ public class BookService {
 
     private final String url = "https://www.googleapis.com/books/v1/volumes/%s";
 
-    public UserBookDetailsDTO add(String userId, String bookId) {
+    public UserBooksDetailsDTO add(String userId, String bookId) {
 
         var user = userRepository.findById(userId);
 
@@ -59,7 +59,7 @@ public class BookService {
 
             userBooksRepository.save(userBook);
 
-            return new UserBookDetailsDTO(userBook);
+            return new UserBooksDetailsDTO(userBook);
 
         }
 
@@ -71,7 +71,7 @@ public class BookService {
 
         userBooksRepository.save(userBook);
 
-        return new UserBookDetailsDTO(userBook);
+        return new UserBooksDetailsDTO(userBook);
 
     }
 

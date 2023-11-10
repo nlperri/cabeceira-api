@@ -1,6 +1,9 @@
 package cabeceira.api.domain.book;
 
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Book { 
+public class Book {
 
     @Id
     private String id;
@@ -38,10 +41,10 @@ public class Book {
     @Column(name = "total_pages")
     private int totalPages;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String cover;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "published_date")
@@ -54,9 +57,11 @@ public class Book {
     private Set<Author> authors;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
+
     private List<UserBooks> usersBooks;
 
-public Book(String id, String title, int totalPages, String cover, String description, String publishedDate, String publisher, Set<Author> authors) {
+    public Book(String id, String title, int totalPages, String cover, String description, String publishedDate,
+            String publisher, Set<Author> authors) {
         this.id = id;
         this.title = title;
         this.totalPages = totalPages;

@@ -36,6 +36,7 @@ public class BookService {
     private final String url = "https://www.googleapis.com/books/v1/volumes/%s";
 
     public UserBookDetailsDTO add(String userId, String bookId) {
+
         var user = userRepository.findById(userId);
 
         if (user.isEmpty()) {
@@ -46,34 +47,7 @@ public class BookService {
 
         if (book.isEmpty()) {
 
-            var bookFromApi = restTemplate.getForObject(url.formatted(bookId), BookVolume.class);
-
-            var authors = bookFromApi.volumeInfo.authors;
-
-            Set<Author> authorSet = new HashSet<>();
-
-            for (String authorName : authors) {
-                Author author = new Author();
-                author.setName(authorName);
-                authorSet.add(author);
-                authorRepository.save(author);
-            }
-
-            var imageLink = bookFromApi.volumeInfo.imageLinks.thumbnail;
-
-            if (imageLink == null) {
-                imageLink = bookFromApi.volumeInfo.imageLinks.smallThumbnail;
-            }
-
-            var savedBook = new Book(
-                    bookFromApi.id,
-                    bookFromApi.volumeInfo.title,
-                    Integer.parseInt(bookFromApi.volumeInfo.pageCount),
-                    imageLink,
-                    bookFromApi.volumeInfo.description,
-                    bookFromApi.volumeInfo.publishedDate,
-                    bookFromApi.volumeInfo.publisher,
-                    authorSet);
+            Book savedBook = createBookFromApi(bookId);
 
             savedBook = bookRepository.save(savedBook);
 
@@ -86,7 +60,7 @@ public class BookService {
             userBooksRepository.save(userBook);
 
             return new UserBookDetailsDTO(userBook);
-                
+
         }
 
         var userBook = new UserBooks(
@@ -99,5 +73,38 @@ public class BookService {
 
         return new UserBookDetailsDTO(userBook);
 
+    }
+
+    private Book createBookFromApi(String bookId) {
+        var bookFromApi = restTemplate.getForObject(url.formatted(bookId), BookVolume.class);
+
+        var authors = bookFromApi.volumeInfo.authors;
+
+        Set<Author> authorSet = new HashSet<>();
+
+        for (String authorName : authors) {
+            Author author = new Author();
+            author.setName(authorName);
+            authorSet.add(author);
+            authorRepository.save(author);
+        }
+
+        var imageLink = bookFromApi.volumeInfo.imageLinks.thumbnail;
+
+        if (imageLink == null) {
+            imageLink = bookFromApi.volumeInfo.imageLinks.smallThumbnail;
+        }
+
+        var book = new Book(
+                bookFromApi.id,
+                bookFromApi.volumeInfo.title,
+                Integer.parseInt(bookFromApi.volumeInfo.pageCount),
+                imageLink,
+                bookFromApi.volumeInfo.description,
+                bookFromApi.volumeInfo.publishedDate,
+                bookFromApi.volumeInfo.publisher,
+                authorSet);
+
+        return book;
     }
 }

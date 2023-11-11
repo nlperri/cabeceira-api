@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cabeceira.api.domain.user.UserRepository;
 import org.springframework.stereotype.Service;
 import cabeceira.api.infra.exception.ValidatorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import cabeceira.api.domain.userBooks.BookshelfStatus;
 import cabeceira.api.domain.userBooks.UserBooks;

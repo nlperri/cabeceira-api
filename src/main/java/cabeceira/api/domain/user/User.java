@@ -43,9 +43,6 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    // private List<UserBooks> userBook;
-
     public User(CreateUserDTO data) {
         this.email = data.email();
         this.password = data.password();

@@ -49,18 +49,4 @@ public class Book {
     @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors;
 
-    // @OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
-    // private List<UserBooks> usersBooks;
-
-    // public Book(String id, String title, int totalPages, String cover, String description, String publishedDate,
-    //         String publisher, Set<Author> authors) {
-    //     this.id = id;
-    //     this.title = title;
-    //     this.totalPages = totalPages;
-    //     this.cover = cover;
-    //     this.description = description;
-    //     this.publishedDate = publishedDate;
-    //     this.publisher = publisher;
-    //     this.authors = authors;
-    // }
 }

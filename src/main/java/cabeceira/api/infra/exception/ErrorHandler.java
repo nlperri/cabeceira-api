@@ -2,6 +2,7 @@ package cabeceira.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -10,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 
 import javax.naming.AuthenticationException;
@@ -62,7 +64,15 @@ public class ErrorHandler {
 
     @ExceptionHandler(RestClientException.class)
     public ResponseEntity<String> handleRestClientError(RestClientException ex) {
-        return ((BodyBuilder) ResponseEntity.notFound()).body(ex.getMessage());
+        if (ex instanceof HttpStatusCodeException httpException) {
+            HttpStatusCode statusCode = httpException.getStatusCode();
+
+            if (statusCode == HttpStatus.SERVICE_UNAVAILABLE) {
+                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Serviço temporariamente fora do ar.");
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     public record ErrorValidationDTO(String field, String message) {

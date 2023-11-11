@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 import cabeceira.api.domain.userBooks.UserBooksService;
 import cabeceira.api.domain.userBooks.dto.UpdateUserBooksDTO;
 import cabeceira.api.domain.userBooks.dto.UserBooksDetailsDTO;
+import cabeceira.api.domain.userBooks.dto.UserBooksWithBookDetailsDTO;
 import cabeceira.api.infra.security.TokenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
@@ -47,17 +48,17 @@ public class UserBookController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<Object> getDetails(@PathVariable String bookId) {
+    public ResponseEntity<UserBooksWithBookDetailsDTO> getDetails(@PathVariable String bookId) {
         var userId = tokenService.getLoggedUserId();
         var bookDetails = userBooksService.getDetails(userId, bookId);
         return ResponseEntity.ok().body(bookDetails);
     }
 
-    // @GetMapping()
-    // public ResponseEntity<List<UserBooksWithBookDetailsDTO>> fetchUserBooks() {
-    // var userId = tokenService.getLoggedUserId();
-    // var userBooksList = userBooksService.fetchUserBooks(userId);
-    // return ResponseEntity.ok().body(userBooksList);
-    // }
+    @GetMapping()
+    public ResponseEntity<List<UserBooksWithBookDetailsDTO>> fetchUserBooks() {
+        var userId = tokenService.getLoggedUserId();
+        var userBooksList = userBooksService.fetchUserBooks(userId);
+        return ResponseEntity.ok().body(userBooksList);
+    }
 
 }

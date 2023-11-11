@@ -3,6 +3,10 @@ package cabeceira.api.domain.userBooks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import cabeceira.api.domain.user.User;
 import cabeceira.api.domain.user.UserRepository;
 import cabeceira.api.domain.book.Book;
@@ -50,7 +54,7 @@ public class UserBooksService {
 
     }
 
-    public Object getDetails(String userId, String bookId) {
+    public UserBooksWithBookDetailsDTO getDetails(String userId, String bookId) {
         userExists(userId);
         bookExists(bookId);
 
@@ -61,9 +65,22 @@ public class UserBooksService {
         return data;
     }
 
-    // public List<UserBooksWithBookDetailsDTO> fetchUserBooks(String userId) {
+    public List<UserBooksWithBookDetailsDTO> fetchUserBooks(String userId) {
+        userExists(userId);
 
-    // }
+        var userBooksOptional = this.userBooksRepository.findAllByUserId(userId);
+
+        if (userBooksOptional.isPresent()) {
+            List<UserBooks> userBooks = userBooksOptional.get();
+            List<UserBooksWithBookDetailsDTO> userBooksWithDetailsList = userBooks.stream()
+                    .map(UserBooksWithBookDetailsDTO::new)
+                    .collect(Collectors.toList());
+
+            return userBooksWithDetailsList;
+        }
+        return Collections.emptyList();
+
+    }
 
     public void delete(String userBookId, String userId) {
 

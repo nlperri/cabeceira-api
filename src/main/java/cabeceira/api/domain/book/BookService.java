@@ -76,18 +76,24 @@ public class BookService {
 
     }
 
-    private Book createBookFromApi(String bookId) {
+    public Book createBookFromApi(String bookId) {
         var bookFromApi = restTemplate.getForObject(url.formatted(bookId), BookVolume.class);
 
         var authors = bookFromApi.volumeInfo.authors;
 
         Set<Author> authorSet = new HashSet<>();
 
-        for (String authorName : authors) {
+        if(authors == null) {
             Author author = new Author();
-            author.setName(authorName);
+            author.setName("Autor desconhecido.");
             authorSet.add(author);
-            authorRepository.save(author);
+        } else {
+            for (String authorName : authors) {
+                Author author = new Author();
+                author.setName(authorName);
+                authorSet.add(author);
+                authorRepository.save(author);
+            }
         }
 
         var imageLink = bookFromApi.volumeInfo.imageLinks.thumbnail;
@@ -96,7 +102,7 @@ public class BookService {
             imageLink = bookFromApi.volumeInfo.imageLinks.smallThumbnail;
         }
 
-        var book = new Book(
+        return new Book(
                 bookFromApi.id,
                 bookFromApi.volumeInfo.title,
                 Integer.parseInt(bookFromApi.volumeInfo.pageCount),
@@ -106,6 +112,5 @@ public class BookService {
                 bookFromApi.volumeInfo.publisher,
                 authorSet);
 
-        return book;
     }
 }

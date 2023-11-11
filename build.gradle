@@ -36,6 +36,7 @@ dependencies {
 	implementation group: 'com.auth0', name: 'java-jwt', version: '4.4.0'
 }
 
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
@@ -46,7 +47,7 @@ sourceSets {
             srcDirs = ['src/test/java']
         }
         resources {
-            srcDirs = ['src/test/java/adopet/api/resources']
+            srcDirs = ['src/test/resources']
         }
     }
 }

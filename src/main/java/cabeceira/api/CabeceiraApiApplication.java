@@ -17,4 +17,5 @@ public class CabeceiraApiApplication {
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
 	}
+
 }

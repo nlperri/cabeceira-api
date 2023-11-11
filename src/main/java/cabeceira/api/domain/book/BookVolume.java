@@ -16,19 +16,24 @@ public class BookVolume {
     public String selfLink;
     public VolumeInfo volumeInfo;
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class VolumeInfo {
+        public String title;
+        public List<String> authors;
+        public String publishedDate;
+        public String description;
+        public String publisher;
+        public String pageCount;
+        public ImageLinks imageLinks;
+    }
+    @NoArgsConstructor
+    @AllArgsConstructor
+   public static class ImageLinks{
+        public String smallThumbnail;
+        public String thumbnail;
+    }
+
 }
 
-class VolumeInfo {
-    public String title;
-    public List<String> authors;
-    public String publishedDate;
-    public String description;
-    public String publisher;
-    public String pageCount;
-    public ImageLinks imageLinks; 
-}
 
-class ImageLinks{
-    public String smallThumbnail;
-    public String thumbnail;
-}

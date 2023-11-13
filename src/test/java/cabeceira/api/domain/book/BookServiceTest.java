@@ -21,6 +21,7 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -57,6 +58,7 @@ class BookServiceTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         user = UserMock.create();
         book = BookMock.create();
         bookVolume = BookVolumeMock.create();
@@ -74,7 +76,7 @@ class BookServiceTest {
         BDDMockito.when(bookRepository.save(book)).thenReturn(book);
         BDDMockito.when(userBooksRepository.save(any())).thenReturn(userBooks);
 
-        UserBooksDetailsDTO result = bookService.add(user.getId(), "bookId");
+        UserBooksDetailsDTO result = bookService.add(user.getId(), "nonExistingBookId");
 
         Assertions.assertEquals(user.getId(), result.user().id());
         Assertions.assertEquals(book.getId(), result.book().id());

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import cabeceira.api.domain.user.UserRepository;
@@ -49,6 +50,7 @@ public class UserBooksServiceTest {
 
     @BeforeEach
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
         user = UserMock.create();
         book = BookMock.create();
         userBook = UserBookMock.create(user, book, "1");

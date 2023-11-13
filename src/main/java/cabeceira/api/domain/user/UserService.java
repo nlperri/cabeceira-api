@@ -30,7 +30,11 @@ public class UserService {
         if (user == null) {
             throw new ValidatorException("Id de usuário inválido.");
         }
-
+        if(data.password() != null) {
+            var encriptedPassword = new BCryptPasswordEncoder().encode(data.password());
+            data = new UpdateUserDTO(data.name(), data.lastName(), encriptedPassword);
+        }
+            
         user.update(data);
         userRepository.save(user);
 

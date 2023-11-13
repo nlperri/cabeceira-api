@@ -8,7 +8,6 @@ import cabeceira.api.domain.user.UserRepository;
 import cabeceira.api.domain.user.dto.CreateUserDTO;
 import cabeceira.api.domain.userBooks.UserBooksRepository;
 import cabeceira.api.infra.security.TokenService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -46,8 +45,6 @@ class BookControllerTest {
     @Autowired
     private TokenService tokenService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private String validToken;
     private final String validBookIdFromApi = "-bF2CwAAQBAJ";

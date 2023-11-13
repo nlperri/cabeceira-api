@@ -58,8 +58,7 @@ public class UserBooksService {
         userExists(userId);
         bookExists(bookId);
 
-        var bookDetails = this.userBooksRepository.findByBookId(
-                bookId);
+        var bookDetails = this.userBooksRepository.findByBookId(bookId);
 
         var data = new UserBooksWithBookDetailsDTO(bookDetails.get());
         return data;

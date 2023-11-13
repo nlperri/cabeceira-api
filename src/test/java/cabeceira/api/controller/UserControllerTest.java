@@ -164,7 +164,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("It should return http status ok when is logged")
+    @DisplayName("It should return http status ok when is logged.")
     void testGetUserById() throws Exception {
     
     MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders

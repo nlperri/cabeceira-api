@@ -16,6 +16,12 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserDetailsDTO register(CreateUserDTO data) {
+        var userExists = userRepository.findByEmail(data.email());
+
+        if(userExists != null) {
+            throw new ValidatorException("E-mail já cadastrado.");
+        }
+        
         var user = new User(data);
         var encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         user.setPassword(encryptedPassword);

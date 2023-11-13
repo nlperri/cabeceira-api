@@ -78,7 +78,7 @@ public class UserControllerTest {
     
     @Test
     @WithMockUser
-    @DisplayName("It should return http status created when provided valid information")
+    @DisplayName("It should return http status created when provided valid information.")
     void testRegisterUser() throws Exception {
     
     CreateUserDTO createUserRegisterData = CreateUserDTOMock.create();
@@ -97,7 +97,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("it should return a http status bad request when email already exists")
+    @DisplayName("It should return a http status bad request when email already exists.")
     void testFailRegisterUser() throws Exception {
     
     CreateUserDTO createUserRegisterData = new CreateUserDTO(
@@ -121,7 +121,7 @@ public class UserControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("it should return a http status ok request when provided valid information to update user")
+    @DisplayName("It should return a http status ok request when provided valid information to update user.")
     void testUpdateUser() throws Exception {
     
     UpdateUserDTO updateUserData = UpdateUserDTOMock.create();
@@ -140,7 +140,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("it should return a http status bad request when provided valid information to update user")
+    @DisplayName("It should return a http status bad request when provided valid information to update user.")
     void testFailUpdateUser() throws Exception {
     
         User invalidUser = new User(
@@ -169,6 +169,7 @@ public class UserControllerTest {
     
     MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
                 .get("/users")
+                .header("Authorization", validToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 

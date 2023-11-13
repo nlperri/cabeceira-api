@@ -47,7 +47,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("should save the user with the encrypted password in the database and return a UserDetailsDTO")
+    @DisplayName("It should save the user with the encrypted password in the database and return a UserDetailsDTO.")
     void testRegisterUser(){
         when(this.userRepository.save(user)).thenReturn(user);
         String encriptedPassword = passwordEncoder.encode(createUserDTO.password());
@@ -62,7 +62,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("should update the user from an updateUserDTO with all the provided data.")
+    @DisplayName("It should update the user from an updateUserDTO with all the provided data.")
     void testUpdateUserCase1(){
         when(this.userRepository.getReferenceById("existingId")).thenReturn(user);
         String encriptedPassword = passwordEncoder.encode(updateUserDTO.password());
@@ -80,7 +80,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("should update the user from an updateUserDTO with only a non-null attribute provided")
+    @DisplayName("It should update the user from an updateUserDTO with only a non-null attribute provided.")
     void testUpdateUserCase2(){
         when(this.userRepository.getReferenceById("existingId")).thenReturn(user);
         updateUserDTO = new UpdateUserDTO(null, updateUserDTO.lastName(), null);
@@ -97,7 +97,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("should throw ValidatorException when user id is invalid in update method")
+    @DisplayName("It should throw ValidatorException when user id is invalid in update method.")
     void testUpdateUserCase3(){
         when(this.userRepository.getReferenceById("nonExistentId")).thenReturn(null);
 
@@ -107,7 +107,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("should get the user by id and return a UserDetailsDTO")
+    @DisplayName("It should get the user by id and return a UserDetailsDTO.")
     void testGetByIdCase1(){
         when(this.userRepository.getReferenceById("existingId")).thenReturn(user);
 
@@ -120,7 +120,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("should throw ValidatorException when user id is invalid in getById method")
+    @DisplayName("It should throw ValidatorException when user id is invalid in getById method.")
     void testGetByIdCase2(){
         when(this.userRepository.getReferenceById("nonExistentId")).thenReturn(null);
        

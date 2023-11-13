@@ -9,12 +9,15 @@ import cabeceira.api.domain.mocks.UpdateUserBooksDTOMock;
 import cabeceira.api.domain.mocks.UserMock;
 import cabeceira.api.domain.user.User;
 import cabeceira.api.domain.user.UserRepository;
-import cabeceira.api.domain.user.dto.CreateUserDTO;
 import cabeceira.api.domain.userBooks.UserBooks;
 import cabeceira.api.domain.userBooks.UserBooksRepository;
 import cabeceira.api.domain.userBooks.dto.UpdateUserBooksDTO;
 import cabeceira.api.infra.security.TokenService;
-import org.junit.jupiter.api.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -60,16 +63,14 @@ public class UserBooksControllerTest {
     private JacksonTester<UpdateUserBooksDTO> updateUserBooksJson;
 
     private String validToken;
-    private User user;
     private Book book;
     private UserBooks userBook;
-    private Set<Author> authors;
 
     @BeforeEach
     void setUp() {
-        user = UserMock.create();
+        User user = UserMock.create();
         book = BookMock.create();
-        authors = book.getAuthors();
+        Set<Author> authors = book.getAuthors();
 
         userRepository.save(user);
 

@@ -16,7 +16,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,8 +29,8 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
+@ExtendWith(MockitoExtension.class)
 class BookServiceTest {
-
 
     @InjectMocks
     private BookService bookService;
@@ -45,23 +50,27 @@ class BookServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
+    private User user;
+    private Book book;
+    private BookVolume bookVolume;
+    private UserBooks userBooks;
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        user = UserMock.create();
+        book = BookMock.create();
+        bookVolume = BookVolumeMock.create();
+        userBooks = UserBookMock.create(user, book);
     }
 
     @Test
     @DisplayName("It should add book when book id from api provided it's not registered.")
     void testAddNewBook() {
 
-        User user = UserMock.create();
-        Book book = BookMock.create();
-        BookVolume bookVolume = BookVolumeMock.create();
-        UserBooks userBooks = UserBookMock.create(user, book);
-
         BDDMockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         BDDMockito.when(bookRepository.findById("nonExistingBookId")).thenReturn(Optional.empty());
-        BDDMockito.when(restTemplate.getForObject(Mockito.anyString(),Mockito.eq(BookVolume.class))).thenReturn(bookVolume);
+        BDDMockito.when(restTemplate.getForObject(Mockito.anyString(), Mockito.eq(BookVolume.class)))
+                .thenReturn(bookVolume);
         BDDMockito.when(bookRepository.save(book)).thenReturn(book);
         BDDMockito.when(userBooksRepository.save(any())).thenReturn(userBooks);
 
@@ -76,10 +85,6 @@ class BookServiceTest {
     @Test
     @DisplayName("It should not add book when book id from api provided it's already registered.")
     void testBookAlreadyRegistered() {
-
-        User user = UserMock.create();
-        Book book = BookMock.create();
-        UserBooks userBooks = UserBookMock.create(user, book);
 
         BDDMockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         BDDMockito.when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
@@ -96,7 +101,6 @@ class BookServiceTest {
     @Test
     @DisplayName("It should throw RestClientException when book id from api doesn't exist.")
     void testRestClientExceptionOnNonExistingBook() {
-        User user = UserMock.create();
 
         BDDMockito.when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         BDDMockito.when(bookRepository.findById("nonExistingBookId")).thenReturn(Optional.empty());

@@ -2,6 +2,8 @@ package cabeceira.api.domain.user;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,6 +40,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(nullable = false)
+    @Size(min = 8, message = "Senha deve conter no mínimo 8 caracteres.")
     private String password;
 
     @Column(unique = true, nullable = false)

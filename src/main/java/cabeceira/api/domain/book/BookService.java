@@ -38,11 +38,13 @@ public class BookService {
     public UserBooksDetailsDTO add(String userId, String bookId) {
 
         var user = userRepository.findById(userId);
-
+        var userBookFromUser = userBooksRepository.findByBookIdAndUserId(bookId, userId);
         if (user.isEmpty()) {
             throw new ValidatorException("Id de usuário inválido.");
         }
-
+        if(userBookFromUser.isPresent()){
+            throw new ValidatorException("Usuário já possui esse livro.");
+        }
         var book = bookRepository.findById(bookId);
 
         if (book.isEmpty()) {
@@ -94,10 +96,9 @@ public class BookService {
                 authorRepository.save(author);
             }
         }
-
-        var imageLink = bookFromApi.volumeInfo.imageLinks.thumbnail;
-
-        if (imageLink == null) {
+        var imageLink = "";
+         
+        if(bookFromApi.volumeInfo.imageLinks != null) {
             imageLink = bookFromApi.volumeInfo.imageLinks.smallThumbnail;
         }
 

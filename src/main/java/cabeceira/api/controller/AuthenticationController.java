@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import cabeceira.api.domain.user.dto.AuthenticationDTO;
 import cabeceira.api.domain.user.dto.LoginResponseDTO;
 import cabeceira.api.infra.security.TokenService;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthenticationController {

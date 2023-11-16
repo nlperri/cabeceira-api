@@ -12,6 +12,8 @@ public interface UserBooksRepository extends JpaRepository<UserBooks, String> {
 
     Optional<UserBooks> findByBookId(String bookId);
 
+    Optional<UserBooks> findByBookIdAndUserId(String bookId, String userId);
+
     Optional<List<UserBooks>> findAllByUserId(String userId);
 
 }

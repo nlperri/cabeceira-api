@@ -34,7 +34,6 @@ public class UserBookController {
     public ResponseEntity<UserBooksDetailsDTO> update(@RequestBody UpdateUserBooksDTO data,
             @PathVariable String userBookId) {
         String userId = this.tokenService.getLoggedUserId();
-
         UserBooksDetailsDTO userBook = userBooksService.update(data, userBookId, userId);
         return ResponseEntity.ok().body(userBook);
     }

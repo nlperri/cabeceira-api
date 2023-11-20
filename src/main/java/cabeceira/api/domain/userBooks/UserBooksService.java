@@ -35,15 +35,13 @@ public class UserBooksService {
         var userBook = userBooksExists(userBookId);
 
         var book = bookRepository.getReferenceById(userBook.getBook().getId());
+        var bookTotalpages = book.getTotalPages();
 
-        if (data.readedPages() != null) {
-            if (data.readedPages() > book.getTotalPages()) {
-                throw new ValidatorException("Número de páginas lidas inválido.");
-            }
+        if (data.readedPages() > book.getTotalPages()) {
+            throw new ValidatorException("Número de páginas lidas inválido.");
         }
 
-        if (data.bookshelfStatus() == BookshelfStatus.READED) {
-            var bookTotalpages = book.getTotalPages();
+        if (data.bookshelfStatus() == BookshelfStatus.READED || data.readedPages() == bookTotalpages) {
             data = new UpdateUserBooksDTO(BookshelfStatus.READED, bookTotalpages);
         }
 
@@ -60,8 +58,7 @@ public class UserBooksService {
 
         var bookDetails = this.userBooksRepository.findByBookId(bookId);
 
-        var data = new UserBooksWithBookDetailsDTO(bookDetails.get());
-        return data;
+        return new UserBooksWithBookDetailsDTO(bookDetails.get());
     }
 
     public List<UserBooksWithBookDetailsDTO> fetchUserBooks(String userId) {

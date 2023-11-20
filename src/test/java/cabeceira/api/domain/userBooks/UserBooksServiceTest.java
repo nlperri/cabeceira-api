@@ -61,12 +61,12 @@ public class UserBooksServiceTest {
     @DisplayName("It should update an user book when provides valid information.")
     void testUpdateUserBooks() {
         when(this.UserRepository.getReferenceById(user.getId())).thenReturn(user);
-        when(this.userBooksRepository.getReferenceById(userBook.getId())).thenReturn(userBook);
+        when(this.userBooksRepository.getReferenceById(userBook.getId())).thenReturn(userBook); // Want to Read - 0
         when(this.bookRepository.getReferenceById(book.getId())).thenReturn(book);
-        userBook.update(updateUserBooksDTO);
+        userBook.update(updateUserBooksDTO); // Reading - 10
         when(this.userBooksRepository.save(userBook)).thenReturn(userBook);
         
-        UserBooksDetailsDTO userBooksDetailsDto = this.userBooksService.update(updateUserBooksDTO, userBook.getId(), user.getId());
+        UserBooksDetailsDTO userBooksDetailsDto = this.userBooksService.update(updateUserBooksDTO, userBook.getId(), user.getId()); // Want to Read - 0 {Vira} Reading - 10
 
         assertEquals(updateUserBooksDTO.bookshelfStatus(), userBooksDetailsDto.bookshelfStatus());
         assertEquals(updateUserBooksDTO.readedPages(), userBooksDetailsDto.readedPages());

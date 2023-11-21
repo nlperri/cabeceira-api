@@ -12,7 +12,7 @@ FROM openjdk:17
 
 WORKDIR /home/cabeceira
 
-COPY --from=build /usr/share/java/mysql-connector-java-8.0.29.jar .
+COPY --from=build /usr/share/java/mysql-connector-java-8.0.33.jar .
 
 COPY --from=build /home/cabeceira/build/libs/api-0.0.1-SNAPSHOT.jar .
 

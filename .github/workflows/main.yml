@@ -30,6 +30,6 @@ jobs:
 
       - name: Push to Docker Hub
         run: |
-          docker tag app-dev:latest nlperri/cabeceira-api:latest
-          docker push nlperri/cabeceira-api:latest
+          docker-compose push app-dev
+
 

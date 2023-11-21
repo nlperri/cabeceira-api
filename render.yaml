@@ -1,5 +1,6 @@
 services:
-  - name: app-dev
+  - type: web
+    name: meu-app-dev
     buildCommand:
       ["docker", "build", "-t", "cabeceira-api", "-f", "Dockerfile.dev", "."]
     startCommand:

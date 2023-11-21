@@ -1,0 +1,19 @@
+services:
+  - name: app-dev
+    buildCommand:
+      ["docker", "build", "-t", "cabeceira-api", "-f", "Dockerfile.dev", "."]
+    startCommand:
+      [
+        "docker",
+        "run",
+        "-p",
+        "8080:8080",
+        "--network=springapimysql-net",
+        "-e",
+        "spring.datasource.url=jdbc:mysql://mysqldb:3306/cabeceira?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true",
+        "--name",
+        "meu-app-dev",
+        "cabeceira-api",
+      ]
+    healthCheckPath: "/actuator/health"
+    httpPort: 8080

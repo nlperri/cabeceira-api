@@ -5,6 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.dev
+    image: nlperri/cabeceira-api:latest
     restart: always
     ports:
       - 8080:8080
@@ -21,7 +22,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-      image: nlperri/cabeceira-api:latest
     restart: always
     ports:
       - 6869:8081

@@ -12,7 +12,7 @@ services:
     networks:
       - springapimysql-net
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3307/cabeceira?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/cabeceira?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
     depends_on:
       - mysqldb
     volumes:
@@ -44,7 +44,7 @@ services:
     networks:
       - springapimysql-net
     ports:
-      - 3307:3306
+      - 3306:3306
 
 networks:
   springapimysql-net:

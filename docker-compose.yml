@@ -10,15 +10,13 @@ services:
       - "8081:8081"
     networks:
       - springapipostgres-net
-    env_file:
-      - .env
     volumes:
       - ".m2:/root/.m2"
-    environment:
-      - SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
-      - SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}
-      - SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
-      - API_SECURITY_TOKEN_SECRET=${{ secrets.JWT_SECRET }}
+     environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - API_SECURITY_TOKEN_SECRET=${API_SECURITY_TOKEN_SECRET}
   app-test:
     build:
       context: .

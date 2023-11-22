@@ -15,10 +15,10 @@ services:
     volumes:
       - ".m2:/root/.m2"
     environment:
-      - SPRING_DATASOURCE_URL=${DB_URL}
-      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-      - API_SECURITY_TOKEN_SECRET=${JWT_SECRET}
+      - SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
+      - SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}
+      - SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
+      - API_SECURITY_TOKEN_SECRET=${{ secrets.JWT_SECRET }}
   app-test:
     build:
       context: .
